@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach
  */
 @Suppress("ClassName")
 // @formatter:off
-class ExampleUnitTest {
+class ExampleUnitTest_Nested_Normal {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 
