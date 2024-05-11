@@ -3,10 +3,6 @@ package com.example.junit5sample
 class Calculator(
     private val repository: Repository,
 ) {
-    fun add(a: Int, b: Int): Int {
-        return a + b
-    }
-
     fun fizzBuzz(value: Int): FizzBuzzResult {
         when {
             canDivide3And5(value) -> return FizzBuzzResult(fizz = true, buzz = true, elseValue = "")
@@ -45,11 +41,6 @@ open class Result(
     open val type: String,
     open val name: String = "",
 )
-
-data class ResultData(
-    override val type: String,
-    override val name: String = "",
-): Result(type, name)
 
 open class Result2(
     open val type: String,
