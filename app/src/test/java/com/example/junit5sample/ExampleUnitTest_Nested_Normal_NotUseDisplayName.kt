@@ -14,10 +14,10 @@ import org.junit.jupiter.api.BeforeEach
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * See [testing documentation](http://d.android.com/
+ * tools/testing).
  */
 @Suppress("ClassName")
-@N("fizzBuzz JUnit5 標準スタイル")
 // @formatter:off
 class `fizzBuzz JUnit5 標準スタイル DN未使用` {
     private lateinit var actor: Calculator
@@ -69,7 +69,7 @@ class `fizzBuzz JUnit5 標準スタイル DN未使用` {
             @T fun `buzz が表示`() { assertTrue(actual.buzz) }
             @T fun `その他 が非表示`() { assertEquals("", actual.elseValue) }
             @T fun `取得1が実行されない`() { verify(exactly = 0) { repository.fetch1() } }
-            @T@N("取得2が実行されない") fun `did not fetch2`() { verify(exactly = 0) { repository.fetch2() } }
+            @T fun `取得2が実行されない`() { verify(exactly = 0) { repository.fetch2() } }
         }
 
         @Ne inner class `引数が 3 と 5 の倍数の場合` {
@@ -84,7 +84,7 @@ class `fizzBuzz JUnit5 標準スタイル DN未使用` {
             @T fun `取得2が実行されない`() { verify(exactly = 0) { repository.fetch2() } }
         }
 
-        @Ne@N("引数が 3 の倍数でも 5 の倍数でもない場合") inner class `can not divide 3 or 5` {
+        @Ne inner class `引数が 3 の倍数でも 5 の倍数でもない場合` {
             @BeforeEach fun setup() {
                 arg = 4
             }
