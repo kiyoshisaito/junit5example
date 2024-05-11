@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
-@N("fizzBuzz JUnit5 標準スタイル")
+@N("fizzBuzz JUnit5 標準スタイル DN使用")
 // @formatter:off
 class ExampleUnitTest_Nested_Normal_UseDisplayName {
     private lateinit var actor: Calculator
