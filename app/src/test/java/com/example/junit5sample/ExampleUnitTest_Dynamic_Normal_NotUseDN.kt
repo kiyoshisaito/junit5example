@@ -1,4 +1,4 @@
-@file:Suppress("NonAsciiCharacters", "TestFunctionName")
+@file:Suppress("NonAsciiCharacters", "TestFunctionName", "RemoveRedundantBackticks")
 
 package com.example.junit5sample
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicNode
 
 /**
@@ -18,9 +17,8 @@ import org.junit.jupiter.api.DynamicNode
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
-@DisplayName("fizzBuzz dynamic test JUnit5標準スタイル")
 // @formatter:off
-class ExampleUnitTest_Dynamic_Normal {
+class `fizzBuzz dynamic test JUnit5標準スタイル DN未使用` {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 
@@ -37,7 +35,7 @@ class ExampleUnitTest_Dynamic_Normal {
     private fun t() {
         actual = actor.fizzBuzz(arg)
     }
-    @TF@N("引数が 3 の倍数の場合") fun `can divide 3`(): List<DynamicNode> {
+    @TF fun `引数が 3 の倍数の場合`(): List<DynamicNode> {
         arg = 3
         t()
         return listOf(
@@ -48,7 +46,7 @@ class ExampleUnitTest_Dynamic_Normal {
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
     }
-    @TF@N("引数が 5 の倍数の場合") fun `can divide 5`(): List<DynamicNode> {
+    @TF fun `引数が 5 の倍数の場合`(): List<DynamicNode> {
         arg = 5
         t()
         return listOf(
@@ -59,7 +57,7 @@ class ExampleUnitTest_Dynamic_Normal {
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
     }
-    @TF@N("引数が 3 と 5 の倍数の場合") fun `can divide 3, 5 `(): List<DynamicNode> {
+    @TF fun `引数が 3 と 5 の倍数の場合`(): List<DynamicNode> {
         arg = 15
         t()
         return listOf(
@@ -70,12 +68,11 @@ class ExampleUnitTest_Dynamic_Normal {
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
     }
-    @Ne @N("引数が 3の倍数でも 5の倍数でもない場合")
-    inner class `can not divide 3, 5` {
+    @Ne  inner class `引数が 3の倍数でも 5の倍数でもない場合` {
         @BeforeEach fun setup() {
             arg = 4
         }
-        @TF@N("共通仕様") fun `can not divide 3, 5 common`(): List<DynamicNode> {
+        @TF fun `共通仕様`(): List<DynamicNode> {
             t()
             return listOf(
                 "fizz が非表示" { assertFalse(actual.fizz) },
@@ -83,7 +80,7 @@ class ExampleUnitTest_Dynamic_Normal {
                 "リポジトリの取得1がされる" { verify(exactly = 1) { repository.fetch1() } },
             )
         }
-        @TF@N("取得1のタイプが A の場合") fun `fetch1 type is A`(): List<DynamicNode> {
+        @TF fun `取得1のタイプが A の場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("A")
             t()
             return listOf(
@@ -91,31 +88,31 @@ class ExampleUnitTest_Dynamic_Normal {
                 "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
             )
         }
-        @Ne@N("取得1のタイプが B の場合") inner class `fetch1 type is B` {
+        @Ne inner class `取得1のタイプが B の場合` {
             @BeforeEach fun setup() {
                 every { repository.fetch1() } returns Result("B")
             }
-            @T@N("取得2が実行される") fun `fetch2 is executed`() {
+            @T fun `取得2が実行される`() {
                 t()
                 verify(exactly = 1) { repository.fetch2() }
             }
-            @TF@N("取得2のタイプが X の場合") fun `fetch2 type is X`(): DynamicNode {
+            @TF fun `取得2のタイプが X の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("X")
                 t()
                 return "その他 が XX で表示" { assertEquals("XX", actual.elseValue) }
             }
-            @TF@N("取得2のタイプが Y の場合") fun `fetch2 type is Y`(): DynamicNode {
+            @TF fun `取得2のタイプが Y の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("Y")
                 t()
                 return "その他 が YY で表示" { assertEquals("YY", actual.elseValue) }
             }
-            @TF@N("取得2のタイプが A でも B でもない場合") fun `fetch2 type is not X, Y`(): DynamicNode {
+            @TF fun `取得2のタイプが A でも B でもない場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("Z")
                 t()
                 return "その他 が BB で表示" { assertEquals("BB", actual.elseValue) }
             }
         }
-        @TF@N("取得1のタイプが A でも B でもない場合") fun `fetch type is not A, B`(): List<DynamicNode> {
+        @TF fun `取得1のタイプが A でも B でもない場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("C")
             t()
             return listOf(

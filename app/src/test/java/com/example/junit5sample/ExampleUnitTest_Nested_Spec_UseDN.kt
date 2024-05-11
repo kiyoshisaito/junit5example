@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach
 @Suppress("ClassName")
 @N("fizzBuzz JUnit5 Specスタイル DN使用")
 // @formatter:off
-class ExampleUnitTest_Nested_Spec_UseDisplayName {
+class ExampleUnitTest_Nested_Spec_UseDN {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 

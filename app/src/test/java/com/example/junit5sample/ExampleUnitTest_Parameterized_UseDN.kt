@@ -17,9 +17,9 @@ import java.util.stream.Stream
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
-@N("fizzBuzz JUnit5 Parameterizedスタイル")
+@N("fizzBuzz JUnit5 Parameterizedスタイル DN使用")
 // @formatter:off
-class ExampleUnitTest_Parameterized {
+class ExampleUnitTest_Parameterized_UseDN {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 
