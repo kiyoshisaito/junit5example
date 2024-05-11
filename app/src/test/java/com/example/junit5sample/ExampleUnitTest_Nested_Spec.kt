@@ -54,7 +54,7 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("buzz が非表示") fun `buzz is x`() { actual.buzz shouldBe false }
             @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
             // 副作用のテスト
-            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
             @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
@@ -66,7 +66,7 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("fizz が非表示") fun `fizz is x`() { actual.fizz shouldBe false }
             @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
             @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
-            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
             @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
@@ -78,7 +78,7 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
             @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
             @T@N("その他 が非表示") fun `else value is x`() { assertEquals("", actual.elseValue) }
-            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
             @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
@@ -88,7 +88,7 @@ class ExampleUnitTest_Nested_Spec {
             }
             @T@N("fizz が非表示") fun `fizz is o`() { t { actual.fizz shouldBe false } }
             @T@N("buzz が非表示") fun `buzz is o`() { t { actual.buzz shouldBe false } }
-            @T@N("取得1が実行される") fun `did fetch`() { t { execute { repository.fetch1() } } }
+            @T@N("取得1が実行される") fun `did fetch1`() { t { execute { repository.fetch1() } } }
 
             @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
                 @BeforeEach fun setup() {
