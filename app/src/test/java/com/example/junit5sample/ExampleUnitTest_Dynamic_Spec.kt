@@ -40,8 +40,8 @@ class ExampleUnitTest_Dynamic_Spec {
             "fizz が表示" { actual.fizz shouldBe true },
             "buzz が非表示" { actual.buzz shouldBe false },
             "その他 が非表示" { actual.elseValue shouldBe "" },
-            "リポジトリの取得1がされない" { notExecute { repository.fetch1() } },
-            "リポジトリの取得2がされない" { notExecute { repository.fetch2() } },
+            "リポジトリの取得1がされない" { shouldNot { repository.fetch1() } },
+            "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
         )
     }
     @TF@N("引数が 5 の倍数の場合") fun `can divide 5`(): List<DynamicNode> {
@@ -51,8 +51,8 @@ class ExampleUnitTest_Dynamic_Spec {
             "fizz が非表示" { actual.fizz shouldBe false },
             "buzz が表示" { actual.buzz shouldBe true },
             "その他 が非表示" { actual.elseValue shouldBe "" },
-            "リポジトリの取得1がされない" { notExecute { repository.fetch1() } },
-            "リポジトリの取得2がされない" { notExecute { repository.fetch2() } },
+            "リポジトリの取得1がされない" { shouldNot { repository.fetch1() } },
+            "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
         )
     }
     @TF@N("引数が 3 と 5 の倍数の場合") fun `can divide 3, 5 `(): List<DynamicNode> {
@@ -62,8 +62,8 @@ class ExampleUnitTest_Dynamic_Spec {
             "fizz が表示" { actual.fizz shouldBe true },
             "buzz が表示" { actual.buzz shouldBe true },
             "その他 が非表示" { actual.elseValue shouldBe "" },
-            "リポジトリ1の取得1がされない" { notExecute { repository.fetch1() } },
-            "リポジトリの取得2がされない" { notExecute { repository.fetch2() } },
+            "リポジトリ1の取得1がされない" { shouldNot { repository.fetch1() } },
+            "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
         )
     }
     @Ne @N("引数が 3の倍数でも 5の倍数でもない場合")
@@ -76,7 +76,7 @@ class ExampleUnitTest_Dynamic_Spec {
             return listOf(
                 "fizz が非表示" { actual.fizz shouldBe false },
                 "buzz が非表示" { actual.buzz shouldBe false },
-                "リポジトリの取得1がされる" { execute { repository.fetch1() } },
+                "リポジトリの取得1がされる" { should { repository.fetch1() } },
             )
         }
         @TF@N("取得1のタイプが A の場合") fun `fetch1 type is A`(): List<DynamicNode> {
@@ -84,7 +84,7 @@ class ExampleUnitTest_Dynamic_Spec {
             t()
             return listOf(
                 "その他 が AA で表示" { actual.elseValue shouldBe "AA" },
-                "リポジトリの取得2がされない" { notExecute { repository.fetch2() } },
+                "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
             )
         }
         @Ne@N("取得1のタイプが B の場合") inner class `fetch1 type is B` {
@@ -93,7 +93,7 @@ class ExampleUnitTest_Dynamic_Spec {
             }
             @T@N("取得2が実行される") fun `fetch2 is executed`() {
                 t()
-                execute { repository.fetch2() }
+                should { repository.fetch2() }
             }
             @TF@N("取得2のタイプが X の場合") fun `fetch2 type is X`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("X")
@@ -116,7 +116,7 @@ class ExampleUnitTest_Dynamic_Spec {
             t()
             return listOf(
                 "その他 が CC で表示" { actual.elseValue shouldBe "CC" },
-                "リポジトリの取得2がされない" { notExecute { repository.fetch2() } },
+                "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
             )
         }
     }

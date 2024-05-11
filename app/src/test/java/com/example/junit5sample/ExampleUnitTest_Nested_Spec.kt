@@ -54,8 +54,8 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("buzz が非表示") fun `buzz is x`() { actual.buzz shouldBe false }
             @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
             // 副作用のテスト
-            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
-            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { shouldNot { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { shouldNot { repository.fetch2() } }
         }
 
         @Ne@N("引数が 5 の倍数の場合") inner class `can divide 5` {
@@ -66,8 +66,8 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("fizz が非表示") fun `fizz is x`() { actual.fizz shouldBe false }
             @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
             @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
-            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
-            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { shouldNot { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { shouldNot { repository.fetch2() } }
         }
 
         @Ne@N("引数が 3 と 5 の倍数の場合") inner class `can divide 3 and 5` {
@@ -78,8 +78,8 @@ class ExampleUnitTest_Nested_Spec {
             @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
             @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
             @T@N("その他 が非表示") fun `else value is x`() { assertEquals("", actual.elseValue) }
-            @T@N("取得1が実行されない") fun `did not fetch1`() { notExecute { repository.fetch1() } }
-            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
+            @T@N("取得1が実行されない") fun `did not fetch1`() { shouldNot { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { shouldNot { repository.fetch2() } }
         }
 
         @Ne@N("引数が 3 の倍数でも 5 の倍数でもない場合") inner class `can not divide 3 or 5` {
@@ -88,7 +88,7 @@ class ExampleUnitTest_Nested_Spec {
             }
             @T@N("fizz が非表示") fun `fizz is o`() { t { actual.fizz shouldBe false } }
             @T@N("buzz が非表示") fun `buzz is o`() { t { actual.buzz shouldBe false } }
-            @T@N("取得1が実行される") fun `did fetch1`() { t { execute { repository.fetch1() } } }
+            @T@N("取得1が実行される") fun `did fetch1`() { t { should { repository.fetch1() } } }
 
             @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
                 @BeforeEach fun setup() {
@@ -96,14 +96,14 @@ class ExampleUnitTest_Nested_Spec {
                     t {}
                 }
                 @T@N("その他 が AA で表示") fun `else value is AA`() { actual.elseValue shouldBe "AA" }
-                @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
+                @T@N("取得2が実行されない") fun `did not fetch2`() { shouldNot { repository.fetch2() } }
             }
 
             @Ne@N("取得1のタイプが B の場合") inner class `fetch1 type is B` {
                 @BeforeEach fun setup() {
                     stubResult = Result("B")
                 }
-                @T@N("取得2が実行される") fun `did fetch repository 2`() { t { execute { repository.fetch2() } } }
+                @T@N("取得2が実行される") fun `did fetch repository 2`() { t { should { repository.fetch2() } } }
                 @Ne@N("取得2のタイプが X の場合") inner class `fetch2 type is X` {
                     @BeforeEach fun setup() {
                         stubResult2 = Result2("X")
@@ -130,7 +130,7 @@ class ExampleUnitTest_Nested_Spec {
                     t {}
                 }
                 @T@N("その他 が CC で表示") fun `else value is CC`() { actual.elseValue shouldBe "CC" }
-                @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
+                @T@N("取得2が実行されない") fun `did not fetch2`() { shouldNot { repository.fetch2() } }
             }
         }
     }

@@ -21,11 +21,11 @@ infix fun <T, U: T> T.shouldBe(expected: U): T {
     return this
 }
 
-fun execute(block: MockKVerificationScope.() -> Unit){
+fun should(block: MockKVerificationScope.() -> Unit){
     verify(exactly = 1, verifyBlock = block)
 }
 
-fun notExecute(block: MockKVerificationScope.() -> Unit) {
+fun shouldNot(block: MockKVerificationScope.() -> Unit) {
     verify(exactly = 0, verifyBlock = block)
 }
 
