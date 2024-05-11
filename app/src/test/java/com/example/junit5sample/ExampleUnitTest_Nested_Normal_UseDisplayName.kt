@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 @Suppress("ClassName")
 @N("fizzBuzz JUnit5 標準スタイル")
 // @formatter:off
-class ExampleUnitTest_Nested_Normal {
+class ExampleUnitTest_Nested_Normal_UseDisplayName {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 
@@ -36,17 +36,17 @@ class ExampleUnitTest_Nested_Normal {
         )
     }
 
+    private fun t(assert: () -> Unit) {
+        // arrange
+        every { repository.fetch1() } returns stubResult
+        every { repository.fetch2() } returns stubResult2
+        // act
+        actual = actor.fizzBuzz(arg)
+        assert()
+    }
+
     @Ne@N("fizzBuzz 副作用テストあり")
     inner class `fizz buzz` {
-        private fun t(assert: () -> Unit) {
-            // arrange
-            every { repository.fetch1() } returns stubResult
-            every { repository.fetch2() } returns stubResult2
-            // act
-            actual = actor.fizzBuzz(arg)
-            assert()
-        }
-
         @Ne@N("引数が 3 の倍数の場合") inner class `can divide 3` {
             @BeforeEach fun setup() {
                 arg = 3
@@ -89,8 +89,8 @@ class ExampleUnitTest_Nested_Normal {
             @BeforeEach fun setup() {
                 arg = 4
             }
-            @T@N("fizz が非表示") fun `fizz is o`() { t { assertFalse(actual.fizz) } }
-            @T@N("buzz が非表示") fun `buzz is o`() { t { assertFalse(actual.buzz) } }
+            @T@N("fizz が非表示") fun `fizz is x`() { t { assertFalse(actual.fizz) } }
+            @T@N("buzz が非表示") fun `buzz is x`() { t { assertFalse(actual.buzz) } }
             @T@N("取得1が実行される") fun `did fetch1`() { t { verify(exactly = 1) { repository.fetch1() } } }
 
             @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
@@ -138,15 +138,6 @@ class ExampleUnitTest_Nested_Normal {
     }
 
     @Ne@N("fizzBuzz 副作用テストなし") inner class `fizz buzz non effect` {
-        private fun t(assert: () -> Unit) {
-            // arrange
-            every { repository.fetch1() } returns stubResult
-            every { repository.fetch2() } returns stubResult2
-            // act
-            actual = actor.fizzBuzz(arg)
-            assert()
-        }
-
         @Ne@N("引数が 3 の倍数の場合") inner class `can divide 3` {
             @BeforeEach fun setup() {
                 arg = 3
@@ -182,8 +173,8 @@ class ExampleUnitTest_Nested_Normal {
             @BeforeEach fun setup() {
                 arg = 4
             }
-            @T@N("fizz が非表示") fun `fizz is o`() { t { assertFalse(actual.fizz) } }
-            @T@N("buzz が非表示") fun `buzz is o`() { t { assertFalse(actual.buzz) } }
+            @T@N("fizz が非表示") fun `fizz is x`() { t { assertFalse(actual.fizz) } }
+            @T@N("buzz が非表示") fun `buzz is x`() { t { assertFalse(actual.buzz) } }
 
             @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
                 @BeforeEach fun setup() {
