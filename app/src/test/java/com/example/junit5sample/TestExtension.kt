@@ -4,9 +4,11 @@ import io.mockk.MockKVerificationScope
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.function.Executable
 
 
 typealias N = DisplayName
@@ -26,3 +28,9 @@ fun execute(block: MockKVerificationScope.() -> Unit){
 fun notExecute(block: MockKVerificationScope.() -> Unit) {
     verify(exactly = 0, verifyBlock = block)
 }
+
+// dynamic test 用の拡張関数
+operator fun String.invoke(test: Executable): DynamicTest {
+    return DynamicTest.dynamicTest(this, test)
+}
+

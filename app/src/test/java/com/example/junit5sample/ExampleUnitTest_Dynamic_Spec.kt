@@ -1,13 +1,11 @@
-@file:Suppress("NonAsciiCharacters", "TestFunctionName")
+@file:Suppress("NonAsciiCharacters")
 
 package com.example.junit5sample
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicNode
@@ -18,9 +16,9 @@ import org.junit.jupiter.api.DynamicNode
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
-@DisplayName("fizzBuzz dynamic test JUnit5標準スタイル")
+@DisplayName("fizzBuzz dynamic test Specスタイル")
 // @formatter:off
-class ExampleUnitTest_Dynamic_Normal {
+class ExampleUnitTest_Dynamic_Spec {
     private lateinit var actor: Calculator
     private lateinit var repository: Repository
 
@@ -41,9 +39,9 @@ class ExampleUnitTest_Dynamic_Normal {
         arg = 3
         t()
         return listOf(
-            "fizz が表示" { assertTrue(actual.fizz) },
-            "buzz が非表示" { assertFalse(actual.buzz) },
-            "その他 が非表示" { assertEquals("", actual.elseValue) },
+            "fizz が表示" { Assertions.assertTrue(actual.fizz) },
+            "buzz が非表示" { Assertions.assertFalse(actual.buzz) },
+            "その他 が非表示" { Assertions.assertEquals("", actual.elseValue) },
             "リポジトリの取得1がされない" { verify(exactly = 0) { repository.fetch1() } },
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
@@ -52,9 +50,9 @@ class ExampleUnitTest_Dynamic_Normal {
         arg = 5
         t()
         return listOf(
-            "fizz が非表示" { assertFalse(actual.fizz) },
-            "buzz が表示" { assertTrue(actual.buzz) },
-            "その他 が非表示" { assertEquals("", actual.elseValue) },
+            "fizz が非表示" { Assertions.assertFalse(actual.fizz) },
+            "buzz が表示" { Assertions.assertTrue(actual.buzz) },
+            "その他 が非表示" { Assertions.assertEquals("", actual.elseValue) },
             "リポジトリの取得1がされない" { verify(exactly = 0) { repository.fetch1() } },
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
@@ -63,9 +61,9 @@ class ExampleUnitTest_Dynamic_Normal {
         arg = 15
         t()
         return listOf(
-            "fizz が表示" { assertTrue(actual.fizz) },
-            "buzz が表示" { assertTrue(actual.buzz) },
-            "その他 が非表示" { assertEquals("", actual.elseValue) },
+            "fizz が表示" { Assertions.assertTrue(actual.fizz) },
+            "buzz が表示" { Assertions.assertTrue(actual.buzz) },
+            "その他 が非表示" { Assertions.assertEquals("", actual.elseValue) },
             "リポジトリ1の取得1がされない" { verify(exactly = 0) { repository.fetch1() } },
             "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
         )
@@ -76,19 +74,19 @@ class ExampleUnitTest_Dynamic_Normal {
         fun setup() {
             arg = 4
         }
-        @TF @N("共通仕様") fun common(): List<DynamicNode> {
+        @TF fun 共通仕様(): List<DynamicNode> {
             t()
             return listOf(
-                "fizz が非表示" { assertFalse(actual.fizz) },
-                "buzz が非表示" { assertFalse(actual.buzz) },
+                "fizz が非表示" { Assertions.assertFalse(actual.fizz) },
+                "buzz が非表示" { Assertions.assertFalse(actual.buzz) },
                 "リポジトリの取得1がされる" { verify(exactly = 1) { repository.fetch1() } },
             )
         }
-        @TF @N("取得1のタイプが A の場合") fun `fetch1 type is A`(): List<DynamicNode> {
+        @TF fun `取得1のタイプが A の場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("A")
             t()
             return listOf(
-                "その他 が AA で表示" { assertEquals("AA", actual.elseValue) },
+                "その他 が AA で表示" { Assertions.assertEquals("AA", actual.elseValue) },
                 "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
             )
         }
@@ -100,24 +98,24 @@ class ExampleUnitTest_Dynamic_Normal {
             @TF fun `取得2のタイプが X の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("X")
                 t()
-                return "その他 が XX で表示" { assertEquals("XX", actual.elseValue) }
+                return "その他 が XX で表示" { Assertions.assertEquals("XX", actual.elseValue) }
             }
             @TF fun `取得2のタイプが Y の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("Y")
                 t()
-                return "その他 が YY で表示" { assertEquals("YY", actual.elseValue) }
+                return "その他 が YY で表示" { Assertions.assertEquals("YY", actual.elseValue) }
             }
             @TF fun `取得2のタイプが A でも B でもない場合`(): DynamicNode {
-                every { repository.fetch2() } returns Result2("C")
+                every { repository.fetch2() } returns Result2("Z")
                 t()
-                return "その他 が BB で表示" { assertEquals("BB", actual.elseValue) }
+                return "その他 が BB で表示" { Assertions.assertEquals("BB", actual.elseValue) }
             }
         }
         @TF fun `取得1のタイプが A でも B でもない場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("C")
             t()
             return listOf(
-                "その他 が CC で表示" { assertEquals("CC", actual.elseValue) },
+                "その他 が CC で表示" { Assertions.assertEquals("CC", actual.elseValue) },
                 "リポジトリの取得2がされない" { verify(exactly = 0) { repository.fetch2() } },
             )
         }

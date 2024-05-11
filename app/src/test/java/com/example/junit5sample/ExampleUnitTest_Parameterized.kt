@@ -17,6 +17,7 @@ import java.util.stream.Stream
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
+@N("fizzBuzz JUnit5 Parameterizedスタイル")
 // @formatter:off
 class ExampleUnitTest_Parameterized {
     private lateinit var actor: Calculator
@@ -39,7 +40,7 @@ class ExampleUnitTest_Parameterized {
         private fun t(arg: Int,
             assert: (FizzBuzzResult) -> Unit) {
             // arrange
-            every { repository.fetch() } returns stubResult
+            every { repository.fetch1() } returns stubResult
             every { repository.fetch2() } returns stubResult2
             // act
             actual = actor.fizzBuzz(arg)
@@ -89,8 +90,8 @@ class ExampleUnitTest_Parameterized {
                     Arguments.arguments( 5, LV("-", null), LV("-", null), LV("空白", "")),
                     Arguments.arguments(15, LV("-", null), LV("-", null), LV("空白", "")),
                     Arguments.arguments( 4, LV("A", "A"), LV("-", null), LV("AA", "AA")),
-                    Arguments.arguments( 4, LV("B", "B"), LV("A", "A"), LV("AAA", "AAA")),
-                    Arguments.arguments( 4, LV("B", "B"), LV("B", "B"), LV("BBB", "BBB")),
+                    Arguments.arguments( 4, LV("B", "B"), LV("X", "X"), LV("XX", "XX")),
+                    Arguments.arguments( 4, LV("B", "B"), LV("Y", "Y"), LV("YY", "YY")),
                     Arguments.arguments( 4, LV("B", "B"), LV("A,B以外", "C"), LV("BB", "BB")),
                     Arguments.arguments( 4, LV("C", "C"), LV("-", null), LV("CC", "CC")),
                 )

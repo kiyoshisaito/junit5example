@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @Suppress("ClassName")
+@N("fizzBuzz JUnit5 Specスタイル")
 // @formatter:off
 class ExampleUnitTest_Nested_Spec {
     private lateinit var actor: Calculator
@@ -36,7 +37,7 @@ class ExampleUnitTest_Nested_Spec {
     inner class `fizz buzz` {
         private fun t(assert: () -> Unit) {
             // arrange
-            every { repository.fetch() } returns stubResult
+            every { repository.fetch1() } returns stubResult
             every { repository.fetch2() } returns stubResult2
             // act
             actual = actor.fizzBuzz(arg)
@@ -49,12 +50,12 @@ class ExampleUnitTest_Nested_Spec {
                 t {}
             }
             // 主作用のテスト
-            @T@N("fizz が表示") fun `fizz is displayed`() { actual.fizz shouldBe true }
-            @T@N("buzz が非表示") fun `buzz is not displayed`() { actual.buzz shouldBe false }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { actual.elseValue shouldBe "" }
+            @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
+            @T@N("buzz が非表示") fun `buzz is x`() { actual.buzz shouldBe false }
+            @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
             // 副作用のテスト
-            @T@N("リポジトリの取得1がされない") fun `did not fetch by repository`() { notExecute { repository.fetch() } }
-            @T@N("リポジトリの取得2がされない") fun `did not fetch2 by repository`() { notExecute { repository.fetch2() } }
+            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
         @Ne@N("引数が 5 の倍数の場合") inner class `can divide 5` {
@@ -62,11 +63,11 @@ class ExampleUnitTest_Nested_Spec {
                 arg = 5
                 t {}
             }
-            @T@N("fizz が非表示") fun `fizz is not displayed`() { actual.fizz shouldBe false }
-            @T@N("buzz が表示") fun `buzz is displayed`() { actual.buzz shouldBe true }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { actual.elseValue shouldBe "" }
-            @T@N("リポジトリの取得1がされない") fun `did not fetch by repository`() { notExecute { repository.fetch() } }
-            @T@N("リポジトリの取得2がされない") fun `did not fetch2 by repository`() { notExecute { repository.fetch2() } }
+            @T@N("fizz が非表示") fun `fizz is x`() { actual.fizz shouldBe false }
+            @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
+            @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
+            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
         @Ne@N("引数が 3 と 5 の倍数の場合") inner class `can divide 3 and 5` {
@@ -74,62 +75,62 @@ class ExampleUnitTest_Nested_Spec {
                 arg = 15
                 t {}
             }
-            @T@N("fizz が表示") fun `fizz is displayed`() { actual.fizz shouldBe true }
-            @T@N("buzz が表示") fun `buzz is displayed`() { actual.buzz shouldBe true }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { assertEquals("", actual.elseValue) }
-            @T@N("リポジトリ1の取得1がされない") fun `did not fetch by repository`() { notExecute { repository.fetch() } }
-            @T@N("リポジトリの取得2がされない") fun `did not fetch2 by repository`() { notExecute { repository.fetch2() } }
+            @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
+            @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
+            @T@N("その他 が非表示") fun `else value is x`() { assertEquals("", actual.elseValue) }
+            @T@N("取得1が実行されない") fun `did not fetch`() { notExecute { repository.fetch1() } }
+            @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
         }
 
         @Ne@N("引数が 3 の倍数でも 5 の倍数でもない場合") inner class `can not divide 3 or 5` {
             @BeforeEach fun setup() {
                 arg = 4
             }
-            @T@N("fizz が非表示") fun `fizz is displayed`() { t { actual.fizz shouldBe false } }
-            @T@N("buzz が非表示") fun `buzz is displayed`() { t { actual.buzz shouldBe false } }
-            @T@N("リポジトリの取得1がされる") fun `did fetch by repository`() { t { execute { repository.fetch() } } }
+            @T@N("fizz が非表示") fun `fizz is o`() { t { actual.fizz shouldBe false } }
+            @T@N("buzz が非表示") fun `buzz is o`() { t { actual.buzz shouldBe false } }
+            @T@N("取得1が実行される") fun `did fetch`() { t { execute { repository.fetch1() } } }
 
-            @Ne@N("リポジトリから取得される値が A の場合") inner class `fetch result is A` {
+            @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
                 @BeforeEach fun setup() {
                     stubResult = Result("A")
                     t {}
                 }
                 @T@N("その他 が AA で表示") fun `else value is AA`() { actual.elseValue shouldBe "AA" }
-                @T@N("リポジトリの取得2がされない") fun `did not fetch2 by repository`() { notExecute { repository.fetch2() } }
+                @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
             }
 
-            @Ne@N("リポジトリから取得される値が B の場合") inner class `fetch result is B` {
+            @Ne@N("取得1のタイプが B の場合") inner class `fetch1 type is B` {
                 @BeforeEach fun setup() {
                     stubResult = Result("B")
                 }
-                @T@N("リポジトリの取得2がされる") fun `did fetch repository 2`() { t { execute { repository.fetch2() } } }
-                @Ne@N("取得2のタイプが A の場合") inner class `fetch2 result is A` {
+                @T@N("取得2が実行される") fun `did fetch repository 2`() { t { execute { repository.fetch2() } } }
+                @Ne@N("取得2のタイプが X の場合") inner class `fetch2 type is X` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("A")
+                        stubResult2 = Result2("X")
                     }
-                    @T@N("その他 が AAA で表示") fun `else value is AAA`() { t { actual.elseValue shouldBe "AAA" } }
+                    @T@N("その他 が XX で表示") fun `else value is XX`() { t { actual.elseValue shouldBe "XX" } }
                 }
-                @Ne@N("取得2のタイプが B の場合") inner class `fetch2 result is B` {
+                @Ne@N("取得2のタイプが Y の場合") inner class `fetch2 type is Y` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("B")
+                        stubResult2 = Result2("Y")
                     }
-                    @T@N("その他 が BBB で表示") fun `else value is BBB`() { t { actual.elseValue shouldBe "BBB" } }
+                    @T@N("その他 が YY で表示") fun `else value is YY`() { t { actual.elseValue shouldBe "YY" } }
                 }
-                @Ne@N("取得2のタイプが A でも B でもない場合") inner class `fetch2 result is C` {
+                @Ne@N("取得2のタイプが X でも Y でもない場合") inner class `fetch2 type is not X, Y` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("C")
+                        stubResult2 = Result2("Z")
                     }
                     @T@N("その他 が BB で表示") fun `else value is BB`() { t { actual.elseValue shouldBe "BB" } }
                 }
             }
 
-            @Ne@N("リポジトリから取得される値が A でも B でもない場合") inner class `fetch result is C` {
+            @Ne@N("取得1のタイプが A でも B でもない場合") inner class `fetch1 type is C` {
                 @BeforeEach fun setup() {
-                    every { repository.fetch() } returns Result("C", "name")
+                    every { repository.fetch1() } returns Result("C", "name")
                     t {}
                 }
                 @T@N("その他 が CC で表示") fun `else value is CC`() { actual.elseValue shouldBe "CC" }
-                @T@N("リポジトリの取得2がされない") fun `did not fetch2 by repository`() { notExecute { repository.fetch2() } }
+                @T@N("取得2が実行されない") fun `did not fetch2`() { notExecute { repository.fetch2() } }
             }
         }
     }
@@ -137,7 +138,7 @@ class ExampleUnitTest_Nested_Spec {
     @Ne@N("fizzBuzz 副作用テストなし") inner class `fizz buzz non effect` {
         private fun t(assert: () -> Unit) {
             // arrange
-            every { repository.fetch() } returns stubResult
+            every { repository.fetch1() } returns stubResult
             every { repository.fetch2() } returns stubResult2
             // act
             actual = actor.fizzBuzz(arg)
@@ -150,9 +151,9 @@ class ExampleUnitTest_Nested_Spec {
                 t {}
             }
             // 主作用のテスト
-            @T@N("fizz が表示") fun `fizz is displayed`() { actual.fizz shouldBe true }
-            @T@N("buzz が非表示") fun `buzz is not displayed`() { actual.buzz shouldBe false }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { actual.elseValue shouldBe "" }
+            @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
+            @T@N("buzz が非表示") fun `buzz is x`() { actual.buzz shouldBe false }
+            @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
         }
 
         @Ne@N("引数が 5 の倍数の場合") inner class `can divide 5` {
@@ -160,9 +161,9 @@ class ExampleUnitTest_Nested_Spec {
                 arg = 5
                 t {}
             }
-            @T@N("fizz が非表示") fun `fizz is not displayed`() { actual.fizz shouldBe false }
-            @T@N("buzz が表示") fun `buzz is displayed`() { actual.buzz shouldBe true }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { actual.elseValue shouldBe "" }
+            @T@N("fizz が非表示") fun `fizz is x`() { actual.fizz shouldBe false }
+            @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true }
+            @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
         }
 
         @Ne@N("引数が 3 と 5 の倍数の場合") inner class `can divide 3 and 5` {
@@ -170,19 +171,19 @@ class ExampleUnitTest_Nested_Spec {
                 arg = 15
                 t {}
             }
-            @T@N("fizz が表示") fun `fizz is displayed`() { actual.fizz shouldBe true }
-            @T@N("buzz が表示") fun `buzz is displayed`() { actual.buzz shouldBe true  }
-            @T@N("その他 が非表示") fun `else value is not displayed`() { actual.elseValue shouldBe "" }
+            @T@N("fizz が表示") fun `fizz is o`() { actual.fizz shouldBe true }
+            @T@N("buzz が表示") fun `buzz is o`() { actual.buzz shouldBe true  }
+            @T@N("その他 が非表示") fun `else value is x`() { actual.elseValue shouldBe "" }
         }
 
         @Ne@N("引数が 3 の倍数でも 5 の倍数でもない場合") inner class `can not divide 3 or 5` {
             @BeforeEach fun setup() {
                 arg = 4
             }
-            @T@N("fizz が非表示") fun `fizz is displayed`() { t { actual.fizz shouldBe false } }
-            @T@N("buzz が非表示") fun `buzz is displayed`() { t { actual.buzz shouldBe false } }
+            @T@N("fizz が非表示") fun `fizz is o`() { t { actual.fizz shouldBe false } }
+            @T@N("buzz が非表示") fun `buzz is o`() { t { actual.buzz shouldBe false } }
 
-            @Ne@N("リポジトリから取得される値が A の場合") inner class `fetch result is A` {
+            @Ne@N("取得1のタイプが A の場合") inner class `fetch1 type is A` {
                 @BeforeEach fun setup() {
                     stubResult = Result("A")
                     t {}
@@ -191,36 +192,36 @@ class ExampleUnitTest_Nested_Spec {
                 { assertEquals("AA", actual.elseValue) }
             }
 
-            @Ne@N("リポジトリから取得される値が B の場合") inner class `fetch result is B` {
+            @Ne@N("取得1のタイプが B の場合") inner class `fetch1 type is B` {
                 @BeforeEach fun setup() {
                     stubResult = Result("B")
                 }
-                @Ne@N("取得2のタイプが A の場合") inner class `fetch2 result is A` {
+                @Ne@N("取得2のタイプが X の場合") inner class `fetch2 type is X` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("A")
+                        stubResult2 = Result2("X")
                     }
-                    @T@N("その他 が AAA で表示") fun `else value is AAA`()
-                    { t { actual.elseValue shouldBe "AAA" } }
+                    @T@N("その他 が XX で表示") fun `else value is XX`()
+                    { t { actual.elseValue shouldBe "XX" } }
                 }
-                @Ne@N("取得2のタイプが B の場合") inner class `fetch2 result is B` {
+                @Ne@N("取得2のタイプが Y の場合") inner class `fetch2 type is Y` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("B")
+                        stubResult2 = Result2("Y")
                     }
-                    @T@N("その他 が BBB で表示") fun `else value is BBB`()
-                    { t { actual.elseValue shouldBe "BBB" } }
+                    @T@N("その他 が YY で表示") fun `else value is YY`()
+                    { t { actual.elseValue shouldBe "YY" } }
                 }
-                @Ne@N("取得2のタイプが A でも B でもない場合") inner class `fetch2 result is C` {
+                @Ne@N("取得2のタイプが A でも B でもない場合") inner class `fetch2 type is not A, B` {
                     @BeforeEach fun setup() {
-                        stubResult2 = Result2("C")
+                        stubResult2 = Result2("Z")
                     }
                     @T@N("その他 が BB で表示") fun `else value is BB`()
                     { t { actual.elseValue shouldBe "BB" } }
                 }
             }
 
-            @Ne@N("リポジトリから取得される値が A でも B でもない場合") inner class `fetch result is C` {
+            @Ne@N("取得1のタイプが A でも B でもない場合") inner class `fetch1 type is not A, B` {
                 @BeforeEach fun setup() {
-                    every { repository.fetch() } returns Result("C", "name")
+                    every { repository.fetch1() } returns Result("C", "name")
                 }
                 @T@N("その他 が CC で表示") fun `else value is CC`()
                 { t { actual.elseValue shouldBe "CC" } }

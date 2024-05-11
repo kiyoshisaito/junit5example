@@ -13,7 +13,7 @@ class Calculator(
             canDivide3(value) -> return FizzBuzzResult(fizz = true, buzz = false, elseValue = "")
             canDivide5(value) -> return FizzBuzzResult(fizz = false, buzz = true, elseValue = "")
         }
-        val result = repository.fetch()
+        val result = repository.fetch1()
         result ?: return FizzBuzzResult(fizz = false, buzz = false, elseValue = "CC")
         return when (result.type) {
             "A" -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "AA")
@@ -21,8 +21,8 @@ class Calculator(
                 val result2 = repository.fetch2()
                 result2 ?: return FizzBuzzResult(fizz = false, buzz = false, elseValue = "BB")
                 when (result2.type) {
-                    "A" -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "AAA")
-                    "B" -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "BBB")
+                    "X" -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "XX")
+                    "Y" -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "YY")
                     else -> FizzBuzzResult(fizz = false, buzz = false, elseValue = "BB")
                 }
             }
@@ -57,7 +57,7 @@ open class Result2(
 )
 
 class Repository {
-    fun fetch(): Result? {
+    fun fetch1(): Result? {
         return null
     }
     fun fetch2(): Result2? {
