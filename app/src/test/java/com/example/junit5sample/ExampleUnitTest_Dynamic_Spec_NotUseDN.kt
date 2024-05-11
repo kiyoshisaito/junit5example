@@ -4,6 +4,7 @@ package com.example.junit5sample
 
 import io.mockk.every
 import io.mockk.mockk
+import net.bytebuddy.asm.Advice.This
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DynamicNode
 
@@ -28,12 +29,13 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
 
     private var arg = 0
     private lateinit var actual: FizzBuzzResult
-    private fun t() {
+    private fun t(assert: () -> Unit) {
         actual = actor.fizzBuzz(arg)
+        assert()
     }
     @TF fun `引数が 3 の倍数の場合`(): List<DynamicNode> {
         arg = 3
-        t()
+        t {}
         return listOf(
             "fizz が表示" { actual.fizz shouldBe true },
             "buzz が非表示" { actual.buzz shouldBe false },
@@ -44,7 +46,7 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
     }
     @TF fun `引数が 5 の倍数の場合`(): List<DynamicNode> {
         arg = 5
-        t()
+        t {}
         return listOf(
             "fizz が非表示" { actual.fizz shouldBe false },
             "buzz が表示" { actual.buzz shouldBe true },
@@ -55,7 +57,7 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
     }
     @TF fun `引数が 3 と 5 の倍数の場合`(): List<DynamicNode> {
         arg = 15
-        t()
+        t {}
         return listOf(
             "fizz が表示" { actual.fizz shouldBe true },
             "buzz が表示" { actual.buzz shouldBe true },
@@ -69,7 +71,7 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
             arg = 4
         }
         @TF fun `共通仕様`(): List<DynamicNode> {
-            t()
+            t {}
             return listOf(
                 "fizz が非表示" { actual.fizz shouldBe false },
                 "buzz が非表示" { actual.buzz shouldBe false },
@@ -78,7 +80,7 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
         }
         @TF fun `取得1のタイプが A の場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("A")
-            t()
+            t {}
             return listOf(
                 "その他 が AA で表示" { actual.elseValue shouldBe "AA" },
                 "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
@@ -88,29 +90,26 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
             @BeforeEach fun setup() {
                 every { repository.fetch1() } returns Result("B")
             }
-            @T fun `取得2が実行される`() {
-                t()
-                should { repository.fetch2() }
-            }
+            @T fun `取得2が実行される`() { t { should { repository.fetch2() } } }
             @TF fun `取得2のタイプが X の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("X")
-                t()
+                t {}
                 return "その他 が XX で表示" { actual.elseValue shouldBe "XX" }
             }
             @TF fun `取得2のタイプが Y の場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("Y")
-                t()
+                t {}
                 return "その他 が YY で表示" { actual.elseValue shouldBe "YY" }
             }
             @TF fun `取得2のタイプが A でも B でもない場合`(): DynamicNode {
                 every { repository.fetch2() } returns Result2("Z")
-                t()
+                t {}
                 return "その他 が BB で表示" { actual.elseValue shouldBe "BB" }
             }
         }
         @TF fun `取得1のタイプが A でも B でもない場合`(): List<DynamicNode> {
             every { repository.fetch1() } returns Result("C")
-            t()
+            t {}
             return listOf(
                 "その他 が CC で表示" { actual.elseValue shouldBe "CC" },
                 "リポジトリの取得2がされない" { shouldNot { repository.fetch2() } },
@@ -118,3 +117,4 @@ class `fizzBuzz dynamic test Specスタイル DN未使用` {
         }
     }
 }
+
