@@ -177,7 +177,7 @@ class `fizzBuzz JUnit5 Specスタイル DN未使用` {
                     stubResult = Result("A")
                     t {}
                 }
-                @T fun `その他 が AA で表示`() { assertEquals("AA", actual.elseValue) }
+                @T fun `その他 が AA で表示`() { actual.elseValue shouldBe "AA" }
             }
 
             @Ne inner class `取得1のタイプが B の場合` {
